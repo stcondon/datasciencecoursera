@@ -55,7 +55,7 @@ run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        # column names to camelCase and lose the -'s and ()'s.
        colnames(data) <- gsub("-m", "M", colnames(data))
        colnames(data) <- gsub("-s", "S", colnames(data))
-       colnames(data) <- gsub("-", "M", colnames(data))
+       colnames(data) <- gsub("-", "", colnames(data))
        colnames(data) <- gsub("\\()", "", colnames(data))
        
        #To conclude, call the dataset
