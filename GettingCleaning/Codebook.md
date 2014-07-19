@@ -7,4 +7,4 @@ Codebook
 
 The rest of the 68 columns are the average of mean* and standard deviation measurements broken down by subjects and their respective actions.
 
-+* not including the mean frequency measurements, which are not strictly speaking part of the mean and standard deviation measurements.
+* not including the mean frequency measurements, which are not strictly speaking part of the mean and standard deviation measurements.
