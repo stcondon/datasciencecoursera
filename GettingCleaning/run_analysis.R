@@ -1,4 +1,5 @@
 require(plyr)
+# the input is a string with the path to the dataset WITH a slash at the end
 run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        # First we pull in the activity labels and bind them together. 
        test_labels <- read.table(paste0(dir, "test/y_test.txt"))
@@ -7,14 +8,13 @@ run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        labels <- rbind(train_labels, test_labels)
        
        # We want pretty activity labels, so we first remove the pesky _'s
-       # and then substitute the text from the activity_labels.txt the 
-       # numbers in the the label sets for the activities they represent
+       # and then substitute the text from 'activity_labels.txt' for the 
+       # numbers in the the label sets.
        al$V2 <- gsub("_", " ", al$V2)
        for(i in seq(6)) {labels$V1 <- gsub(i, al$V2[i], labels$V1)}
        
        # Now we introduce the subjects, which we just bind to the activities,
-       # name the columns, being careful with rbind to preserve the order
-       # we used above to bind the activity labels together.
+       # name the columns, being careful with rbind to preserve our order.
        subj_train <- read.table(paste0(dir, "train/subject_train.txt"))
        subj_test <- read.table(paste0(dir, "test/subject_test.txt"))
        subjects <- rbind(subj_train, subj_test)
@@ -35,8 +35,7 @@ run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        freq <- feat[grep("Freq", feat$V2),1]
        feat <- feat[!feat$V1 %in% freq,]
        
-       # Now to give our feature labels a facelift, we convert them to
-       # camelCase and remove the -'s and ()'s
+       # Now to give our feature labels a facelift.
        feat$V2 <- gsub("-m", "M", feat$V2)
        feat$V2 <- gsub("-s", "S", feat$V2)
        feat$V2 <- gsub("-", "", feat$V2)
@@ -44,7 +43,7 @@ run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        
        # Now we import both datasets, combine them and then use our new
        # features list (feat) to define the columns we actually want,
-       # (Takes a LONG time)
+       # (Takes a LONG time).      
        test <- read.table(paste0(dir, "test/X_test.txt"))
        train <- read.table(paste0(dir, "train/X_train.txt"))
        data <- rbind(train,test)
@@ -52,10 +51,10 @@ run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        colnames(data) <- feat$V2
        data <- cbind(labels, data)
        
-       # Finally we get to use ddply from Hadley Wickham's plyr package to
-       # give us the average measurement for each variable by subject and
-       # activity. And that's it! We can call our data and, when called, 
-       # the function will give us our tidy data!
+       # Finally we get to use ddply from the plyr package to give
+       # us the average measurement for each variable by subject and
+       # activity. And that's it! We can call our data and, when 
+       # called, the function will give us our tidy data!
        data <- ddply(data, .(Subject, Activity), colwise(mean))
        data
 }
