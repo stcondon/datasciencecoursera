@@ -5,8 +5,8 @@ charm_city <- charm_city/1000
 year <- seq(1999,2008,3)
 charm_city <- cbind(year,charm_city)
 png(file = "plot2.png")
-plot(charm_city, type = "n", main = "Baltimore Emissions",
+plot(charm_city, type = "n", main = "Baltimore Emissions", col.main ="orange3",
      xlab = "Year", xaxt = "n", ylab = "PM2.5 Emitted (thousand tons)")
-lines(charm_city, type = "l", lwd = 2, col = "orange2"
+lines(charm_city, type = "l", lwd = 2, col = "orange2")
 axis(1, year)
 dev.off()
