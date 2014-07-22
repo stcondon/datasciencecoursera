@@ -1,4 +1,4 @@
-require(plyr)
+library(plyr)
 # the input is a string with the path to the dataset WITH a slash at the end
 run_analysis <- function(dir = "data/UCI HAR Dataset/") {
        # First we pull in the activity labels and bind them together. 
